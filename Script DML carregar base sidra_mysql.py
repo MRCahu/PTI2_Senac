@@ -1,4 +1,9 @@
 import requests
+try:
+    from requests.exceptions import RequestException
+except Exception:  # Allow tests with stubbed requests module
+    class RequestException(Exception):
+        pass
 import mysql.connector
 
 # Função para conectar ao MySQL
@@ -83,6 +88,7 @@ def main():
         print(f"\n📦 Consultando {consulta['tabela']}...")
         try:
             resp = requests.get(consulta["url"])
+            resp.raise_for_status()
             data = resp.json()
 
             inseridos, nulos = 0, 0
@@ -98,8 +104,10 @@ def main():
                     continue
 
             print(f"✅ {consulta['tabela']}: {inseridos} inseridos, {nulos} valores NULL.")
-        except Exception as e:
+        except RequestException as e:
             print(f"❌ Erro ao consultar {consulta['url']}: {e}")
+        except Exception as e:
+            print(f"❌ Erro inesperado ao processar dados: {e}")
 
     # Finaliza conexão
     conn.commit()
