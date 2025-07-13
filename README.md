@@ -67,6 +67,7 @@ Linguagem de programação utilizada para a automação dos processos de **extra
   - Baixar o arquivo "Script DML carregar base sidra_mysql.py" do repositório (https://github.com/valdecircarlos/PI_Senac/blob/main/Script%20DML%20carregar%20base%20sidra_mysql.py)
   - Abra o Prompt de Comando do Windows
   - Acesse o Diretório onde o arquivo de Script "Script DML carregar base sidra_mysql.py" foi salvo.
+  - Configure as variáveis de ambiente `MYSQL_HOST`, `MYSQL_USER`, `MYSQL_PASSWORD` e `MYSQL_DATABASE` com as credenciais do MySQL.
   - Executar o "Script DML carregar base sidra_mysql.py" no Prompt de comando
 
 ---
