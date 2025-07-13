@@ -16,10 +16,6 @@ def conectar_mysql():
         print(f"Erro ao conectar ao MySQL: {err}")
         exit(1)
 
-# Inicia conexão
-conn = conectar_mysql()
-cursor = conn.cursor()
-
 # Lista de consultas SIDRA e tabelas MySQL correspondentes
 consultas = [
     {
@@ -78,31 +74,39 @@ consultas = [
     }
 ]
 
-# Processa todas as consultas
-for consulta in consultas:
-    print(f"\n📦 Consultando {consulta['tabela']}...")
-    try:
-        resp = requests.get(consulta["url"])
-        data = resp.json()
+def main():
+    conn = conectar_mysql()
+    cursor = conn.cursor()
 
-        inseridos, nulos = 0, 0
-        for record in data[1:]:
-            try:
-                valores = consulta["extrair"](record)
-                if valores[0] is None:
-                    nulos += 1
-                cursor.execute(consulta["sql"], valores)
-                inseridos += cursor.rowcount
-            except Exception as e:
-                print(f"⚠️ Erro ao processar registro: {e}")
-                continue
+    # Processa todas as consultas
+    for consulta in consultas:
+        print(f"\n📦 Consultando {consulta['tabela']}...")
+        try:
+            resp = requests.get(consulta["url"])
+            data = resp.json()
 
-        print(f"✅ {consulta['tabela']}: {inseridos} inseridos, {nulos} valores NULL.")
-    except Exception as e:
-        print(f"❌ Erro ao consultar {consulta['url']}: {e}")
+            inseridos, nulos = 0, 0
+            for record in data[1:]:
+                try:
+                    valores = consulta["extrair"](record)
+                    if valores[0] is None:
+                        nulos += 1
+                    cursor.execute(consulta["sql"], valores)
+                    inseridos += cursor.rowcount
+                except Exception as e:
+                    print(f"⚠️ Erro ao processar registro: {e}")
+                    continue
 
-# Finaliza conexão
-conn.commit()
-cursor.close()
-conn.close()
-print("\n🔌 Conexão finalizada.")
+            print(f"✅ {consulta['tabela']}: {inseridos} inseridos, {nulos} valores NULL.")
+        except Exception as e:
+            print(f"❌ Erro ao consultar {consulta['url']}: {e}")
+
+    # Finaliza conexão
+    conn.commit()
+    cursor.close()
+    conn.close()
+    print("\n🔌 Conexão finalizada.")
+
+
+if __name__ == "__main__":
+    main()
