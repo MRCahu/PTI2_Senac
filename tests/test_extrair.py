@@ -6,7 +6,7 @@ import sys
 # Carrega o módulo de consultas sem executá-lo como script
 spec = importlib.util.spec_from_file_location(
     "sidra_script",
-    Path(__file__).resolve().parents[1] / "Script DML carregar base sidra_mysql.py",
+    Path(__file__).resolve().parents[1] / "load_sidra_mysql.py",
 )
 mod = importlib.util.module_from_spec(spec)
 # Cria stubs para dependências externas ausentes

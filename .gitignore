@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.env
+.env.*
+*.sqlite
+*.db
+*.rar
+*.jpg
+*.png
+*.pdf
+*.zip
+*.tar.gz

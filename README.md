@@ -24,7 +24,7 @@ Ferramenta de visualização de dados utilizada para a criação de dashboards i
 
 - **Instalação:**  
   Baixe e instale o Power BI Desktop a partir do site oficial ou da Microsoft Store.  
-  [[Download Power BI Desktop](https://powerbi.microsoft.com/desktop](https://www.microsoft.com/pt-br/download/details.aspx?id=58494)
+  [Download Power BI Desktop](https://www.microsoft.com/pt-br/download/details.aspx?id=58494)
 
 - **Principais funcionalidades utilizadas:**  
   - Conexão com fontes de dados MySQL
@@ -60,14 +60,15 @@ Linguagem de programação utilizada para a automação dos processos de **extra
 - **Instalação das Bibliotecas no Windows:**
   - Abra o Prompt de Comando do Windows
   - python --version  (para ver a versão do python)
-  - python install pandas requests mysql-connector-python
+  - pip install -r requirements.txt
   - python -c "import pandas, requests, mysql.connector; print('Tudo instalado corretamente!')"
 
 - **Consulta Base SIDRA e Gravar os Dados na Base MySQL**
-  - Baixar o arquivo "Script DML carregar base sidra_mysql.py" do repositório (https://github.com/valdecircarlos/PI_Senac/blob/main/Script%20DML%20carregar%20base%20sidra_mysql.py)
+  - Baixar o arquivo `load_sidra_mysql.py` do repositório
   - Abra o Prompt de Comando do Windows
-  - Acesse o Diretório onde o arquivo de Script "Script DML carregar base sidra_mysql.py" foi salvo.
-  - Executar o "Script DML carregar base sidra_mysql.py" no Prompt de comando
+  - Acesse o diretório onde o arquivo `load_sidra_mysql.py` foi salvo.
+  - Defina as variáveis de ambiente `MYSQL_HOST`, `MYSQL_USER`, `MYSQL_PASSWORD` e `MYSQL_DB` antes de executar
+  - Execute `python load_sidra_mysql.py` no prompt de comando
 
 ---
 
@@ -104,7 +105,7 @@ A extração dos dados foi feita de forma automatizada via **API do SIDRA**, uti
 - Indicadores de receita nominal e volume de vendas;
 - Segmentação por atividades do comércio varejista e ampliado.
 
-Mais informações sobre como utilizar a API do SIDRA estão disponíveis na [[documentação oficial](https://servicodados.ibge.gov.br/api/docs/sidra)](https://apisidra.ibge.gov.br/home/ajuda).
+Mais informações sobre como utilizar a API do SIDRA estão disponíveis na [documentação oficial](https://apisidra.ibge.gov.br/home/ajuda).
 
 ---
 
