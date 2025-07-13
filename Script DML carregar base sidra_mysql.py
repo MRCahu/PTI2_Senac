@@ -1,6 +1,22 @@
 import requests
 import mysql.connector
 
+
+def parse_float(value):
+    """Converte valor para float quando possível."""
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def parse_int(value):
+    """Converte valor para int quando possível."""
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
 # Função para conectar ao MySQL
 def conectar_mysql():
     try:
@@ -31,7 +47,7 @@ consultas = [
             ) VALUES (%s, %s, %s, %s, %s)
         """,
         "extrair": lambda r: (
-            float(r["V"]) if r.get("V", "").strip().replace('.', '', 1).isdigit() else None,
+            parse_float(r.get("V")),
             r.get("D2N"), r.get("D3N"), r.get("D4C"), r.get("D4N")
         )
     },
@@ -44,8 +60,8 @@ consultas = [
             ) VALUES (%s, %s, %s, %s, %s)
         """,
         "extrair": lambda r: (
-            float(r["V"]) if r.get("V", "").strip().replace('.', '', 1).isdigit() else None,
-            r.get("D2N"), r.get("D3N"), int(r.get("D4C", "")), r.get("D4N")
+            parse_float(r.get("V")),
+            r.get("D2N"), r.get("D3N"), parse_int(r.get("D4C")), r.get("D4N")
         )
     },
     {
@@ -57,7 +73,7 @@ consultas = [
             ) VALUES (%s, %s, %s, %s, %s, %s)
         """,
         "extrair": lambda r: (
-            float(r["V"]) if r.get("V", "").strip().replace('.', '', 1).isdigit() else None,
+            parse_float(r.get("V")),
             r.get("D2N"), r.get("D3N"), r.get("D4N"),
             r.get("D5C"), r.get("D5N")
         )
@@ -71,7 +87,7 @@ consultas = [
             ) VALUES (%s, %s, %s, %s, %s, %s)
         """,
         "extrair": lambda r: (
-            float(r["V"]) if r.get("V", "").strip().replace('.', '', 1).isdigit() else None,
+            parse_float(r.get("V")),
             r.get("D2N"), r.get("D3N"), r.get("D4N"),
             r.get("D5C"), r.get("D5N")
         )
