@@ -1,14 +1,32 @@
+import os
 import requests
 import mysql.connector
 
+
+def parse_float(value):
+    """Try to convert a value to float."""
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def parse_int(value):
+    """Try to convert a value to int."""
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
 # Função para conectar ao MySQL
 def conectar_mysql():
+    """Connect to MySQL using credentials from environment variables."""
     try:
         conn = mysql.connector.connect(
-            host="127.0.0.1",
-            user="root",
-            password="G@mes8090",
-            database="sidra"
+            host=os.environ.get("MYSQL_HOST", "127.0.0.1"),
+            user=os.environ.get("MYSQL_USER", "root"),
+            password=os.environ.get("MYSQL_PASSWORD", ""),
+            database=os.environ.get("MYSQL_DB", "sidra"),
         )
         print("✅ Conectado ao MySQL com sucesso.")
         return conn
@@ -27,8 +45,11 @@ consultas = [
             ) VALUES (%s, %s, %s, %s, %s)
         """,
         "extrair": lambda r: (
-            float(r["V"]) if r.get("V", "").strip().replace('.', '', 1).isdigit() else None,
-            r.get("D2N"), r.get("D3N"), r.get("D4C"), r.get("D4N")
+            parse_float(r.get("V")),
+            r.get("D2N"),
+            r.get("D3N"),
+            r.get("D4C"),
+            r.get("D4N"),
         )
     },
     {
@@ -40,8 +61,11 @@ consultas = [
             ) VALUES (%s, %s, %s, %s, %s)
         """,
         "extrair": lambda r: (
-            float(r["V"]) if r.get("V", "").strip().replace('.', '', 1).isdigit() else None,
-            r.get("D2N"), r.get("D3N"), int(r.get("D4C", "")), r.get("D4N")
+            parse_float(r.get("V")),
+            r.get("D2N"),
+            r.get("D3N"),
+            parse_int(r.get("D4C")),
+            r.get("D4N"),
         )
     },
     {
@@ -53,9 +77,12 @@ consultas = [
             ) VALUES (%s, %s, %s, %s, %s, %s)
         """,
         "extrair": lambda r: (
-            float(r["V"]) if r.get("V", "").strip().replace('.', '', 1).isdigit() else None,
-            r.get("D2N"), r.get("D3N"), r.get("D4N"),
-            r.get("D5C"), r.get("D5N")
+            parse_float(r.get("V")),
+            r.get("D2N"),
+            r.get("D3N"),
+            r.get("D4N"),
+            r.get("D5C"),
+            r.get("D5N"),
         )
     },
     {
@@ -67,9 +94,12 @@ consultas = [
             ) VALUES (%s, %s, %s, %s, %s, %s)
         """,
         "extrair": lambda r: (
-            float(r["V"]) if r.get("V", "").strip().replace('.', '', 1).isdigit() else None,
-            r.get("D2N"), r.get("D3N"), r.get("D4N"),
-            r.get("D5C"), r.get("D5N")
+            parse_float(r.get("V")),
+            r.get("D2N"),
+            r.get("D3N"),
+            r.get("D4N"),
+            r.get("D5C"),
+            r.get("D5N"),
         )
     }
 ]
@@ -83,6 +113,7 @@ def main():
         print(f"\n📦 Consultando {consulta['tabela']}...")
         try:
             resp = requests.get(consulta["url"])
+            resp.raise_for_status()
             data = resp.json()
 
             inseridos, nulos = 0, 0
@@ -98,7 +129,7 @@ def main():
                     continue
 
             print(f"✅ {consulta['tabela']}: {inseridos} inseridos, {nulos} valores NULL.")
-        except Exception as e:
+        except requests.RequestException as e:
             print(f"❌ Erro ao consultar {consulta['url']}: {e}")
 
     # Finaliza conexão
