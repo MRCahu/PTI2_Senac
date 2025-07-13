@@ -109,3 +109,12 @@ Mais informações sobre como utilizar a API do SIDRA estão disponíveis na [[d
 ---
 
 Essas bases fornecem a sustentação estatística para as análises e visualizações desenvolvidas neste projeto.
+
+## Executando os testes
+
+Os testes automatizados utilizam `pytest`. Para executá-los, instale o pacote e rode o comando a seguir na raiz do projeto:
+
+```bash
+pip install pytest
+pytest
+```
