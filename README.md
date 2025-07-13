@@ -64,10 +64,10 @@ Linguagem de programação utilizada para a automação dos processos de **extra
   - python -c "import pandas, requests, mysql.connector; print('Tudo instalado corretamente!')"
 
 - **Consulta Base SIDRA e Gravar os Dados na Base MySQL**
-  - Baixar o arquivo "Script DML carregar base sidra_mysql.py" do repositório (https://github.com/valdecircarlos/PI_Senac/blob/main/Script%20DML%20carregar%20base%20sidra_mysql.py)
+  - Baixar o arquivo "load_sidra_mysql.py" do repositório (https://github.com/valdecircarlos/PI_Senac/blob/main/load_sidra_mysql.py)
   - Abra o Prompt de Comando do Windows
-  - Acesse o Diretório onde o arquivo de Script "Script DML carregar base sidra_mysql.py" foi salvo.
-  - Executar o "Script DML carregar base sidra_mysql.py" no Prompt de comando
+  - Acesse o Diretório onde o arquivo de Script "load_sidra_mysql.py" foi salvo.
+  - Executar o "load_sidra_mysql.py" no Prompt de comando
 
 ---
 
