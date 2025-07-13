@@ -45,7 +45,7 @@ consultas = [
         """,
         "extrair": lambda r: (
             float(r["V"]) if r.get("V", "").strip().replace('.', '', 1).isdigit() else None,
-            r.get("D2N"), r.get("D3N"), int(r.get("D4C", "")), r.get("D4N")
+            r.get("D2N"), r.get("D3N"), int(r.get("D4C") or 0), r.get("D4N")
         )
     },
     {
